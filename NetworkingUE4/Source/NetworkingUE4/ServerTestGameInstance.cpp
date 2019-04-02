@@ -56,7 +56,7 @@ void UServerTestGameInstance::Init()
 
 void UServerTestGameInstance::LoadMenu()
 {
-	Menu = CreateWidget<UMainMenuWidget>(this, MenuClass);
+	UMainMenuWidget* Menu = CreateWidget<UMainMenuWidget>(this, MenuClass);
 	if (!ensure(Menu != nullptr)) return;
 
 	Menu->Setup();
@@ -71,7 +71,6 @@ void UServerTestGameInstance::Host()
 		FNamedOnlineSession* ExistingSession = SessionInterface->GetNamedSession(TEXT("New game session"));
 		if (ExistingSession != nullptr)
 		{
-			//Menu->OnLevelRemovedFromWorld(GetWorld()->GetLevel(0), GetWorld());
 			SessionInterface->DestroySession(TEXT("New game session"));
 		}
 		else
