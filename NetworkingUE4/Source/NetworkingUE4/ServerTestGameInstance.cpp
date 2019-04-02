@@ -7,6 +7,7 @@
 #include "OnlineSessionInterface.h"
 #include "UObject/ConstructorHelpers.h"
 #include "MovingPlatform.h"
+#include "MenuSystem/MainMenuWidget.h"
 #include "GameFramework/PlayerController.h"
 #include "Blueprint/UserWidget.h"
 #include "Engine/Engine.h"
@@ -55,22 +56,11 @@ void UServerTestGameInstance::Init()
 
 void UServerTestGameInstance::LoadMenu()
 {
-	UUserWidget* Menu = CreateWidget<UUserWidget>(this, MenuClass);
-
+	Menu = CreateWidget<UMainMenuWidget>(this, MenuClass);
 	if (!ensure(Menu != nullptr)) return;
 
-	Menu->AddToViewport();
-
-	APlayerController* PlayerCont = GetFirstLocalPlayerController();
-	if (!ensure(PlayerCont != nullptr)) return;
-
-	//Set widget and focus
-	FInputModeUIOnly InputMode;
-	InputMode.SetWidgetToFocus(Menu->TakeWidget());
-	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-
-	PlayerCont->SetInputMode(InputMode);
-	PlayerCont->bShowMouseCursor = true;
+	Menu->Setup();
+	Menu->SetMenuInterface(this);
 }
 
 void UServerTestGameInstance::Host()
@@ -81,6 +71,7 @@ void UServerTestGameInstance::Host()
 		FNamedOnlineSession* ExistingSession = SessionInterface->GetNamedSession(TEXT("New game session"));
 		if (ExistingSession != nullptr)
 		{
+			//Menu->OnLevelRemovedFromWorld(GetWorld()->GetLevel(0), GetWorld());
 			SessionInterface->DestroySession(TEXT("New game session"));
 		}
 		else

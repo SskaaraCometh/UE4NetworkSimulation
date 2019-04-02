@@ -5,13 +5,15 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "OnlineSubsystem.h"
+#include "MenuSystem/IMenuInterface.h"
+#include "MenuSystem/MainMenuWidget.h"
 #include "ServerTestGameInstance.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class NETWORKINGUE4_API UServerTestGameInstance : public UGameInstance
+class NETWORKINGUE4_API UServerTestGameInstance : public UGameInstance, public IIMenuInterface
 {
 	GENERATED_BODY()
 	
@@ -44,5 +46,5 @@ private:
 	
 	TSubclassOf<class UUserWidget> MenuClass;
 
-	
+	UMainMenuWidget* Menu;
 };

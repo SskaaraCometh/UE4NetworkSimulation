@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "IMenuInterface.h"
 #include "MainMenuWidget.generated.h"
 
 /**
@@ -14,7 +15,6 @@ class NETWORKINGUE4_API UMainMenuWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
-	
 public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
@@ -23,6 +23,12 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UButton* Host;
 
+	void SetMenuInterface(IIMenuInterface* MenuInterface);
+
+	void Setup();
+
+	void OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld) override;
+
 private:
 	UFUNCTION()
 	void HostServer();
@@ -30,8 +36,10 @@ private:
 	UFUNCTION()
 	void JoinServer();
 
+	
 protected: 
 	virtual bool Initialize() override;
 
+	IIMenuInterface* MenuInterface = nullptr;
 	
 };
