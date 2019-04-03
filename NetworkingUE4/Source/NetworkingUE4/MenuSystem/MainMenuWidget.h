@@ -18,10 +18,22 @@ class NETWORKINGUE4_API UMainMenuWidget : public UUserWidget
 public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UButton* Join;
+	class UButton* JoinButton;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UButton* Host;
+	class UButton* HostButton;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* BackButton;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UWidgetSwitcher* MenuSwitcher;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UWidget* JoinMenu;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UWidget* MainMenu;
 
 	void SetMenuInterface(IIMenuInterface* MenuInterface);
 
@@ -35,6 +47,12 @@ private:
 
 	UFUNCTION()
 	void JoinServer();
+
+	UFUNCTION()
+	void OpenJoinMenu();
+
+	UFUNCTION()
+	void OpenMainMenu();
 
 	
 protected: 

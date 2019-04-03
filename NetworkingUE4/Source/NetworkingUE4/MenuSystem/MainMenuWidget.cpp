@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MainMenuWidget.h"
+#include "Components/WidgetSwitcher.h"
 #include "Components/Button.h"
 
 bool UMainMenuWidget::Initialize()
@@ -9,11 +10,14 @@ bool UMainMenuWidget::Initialize()
 
 	if (!Success) return false;
 	
-	if (!ensure(Host != nullptr)) return false;
-	Host->OnClicked.AddDynamic(this, &UMainMenuWidget::HostServer);
+	if (!ensure(HostButton != nullptr)) return false;
+	HostButton->OnClicked.AddDynamic(this, &UMainMenuWidget::HostServer);
 	
-	if (!ensure(Join != nullptr)) return false;
-	Join->OnClicked.AddDynamic(this, &UMainMenuWidget::JoinServer);
+	if (!ensure(JoinButton != nullptr)) return false;
+	JoinButton->OnClicked.AddDynamic(this, &UMainMenuWidget::OpenJoinMenu);
+
+	if (!ensure(BackButton != nullptr)) return false;
+	BackButton->OnClicked.AddDynamic(this, &UMainMenuWidget::OpenMainMenu);
 
 	return true;
 }
@@ -65,4 +69,20 @@ void UMainMenuWidget::HostServer()
 void UMainMenuWidget::JoinServer()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Join Server"));
+}
+
+void UMainMenuWidget::OpenJoinMenu()
+{
+	if (!ensure(MenuSwitcher != nullptr)) return;
+	if (!ensure(JoinMenu != nullptr)) return;
+
+	MenuSwitcher->SetActiveWidget(JoinMenu);
+}
+
+void UMainMenuWidget::OpenMainMenu()
+{
+	if (!ensure(MenuSwitcher != nullptr)) return;
+	if (!ensure(MainMenu != nullptr)) return;
+
+	MenuSwitcher->SetActiveWidget(MainMenu);
 }
