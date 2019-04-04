@@ -96,3 +96,8 @@ void UMainMenuWidget::OpenMainMenu()
 
 	MenuSwitcher->SetActiveWidget(MainMenu);
 }
+
+void UMainMenuWidget::InGameLoadMenu()
+{
+	MenuInterface->InGameLoadMenu();
+}

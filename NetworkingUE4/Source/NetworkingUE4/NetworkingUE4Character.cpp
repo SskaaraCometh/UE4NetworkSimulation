@@ -74,8 +74,19 @@ void ANetworkingUE4Character::SetupPlayerInputComponent(class UInputComponent* P
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANetworkingUE4Character::OnResetVR);
+
+	//PlayerINput
+
+	// Call In Game Menu
+	PlayerInputComponent->BindAction("InGameMenu", IE_Pressed, this, &ANetworkingUE4Character::InGameMenu);
 }
 
+void ANetworkingUE4Character::InGameMenu()
+{
+	UServerTestGameInstance* ServerTestGameI = Cast<UServerTestGameInstance>(this->GetGameInstance());
+	if (!ensure(ServerTestGameI != nullptr)) return;
+	ServerTestGameI->InGameLoadMenu();
+}
 
 void ANetworkingUE4Character::OnResetVR()
 {

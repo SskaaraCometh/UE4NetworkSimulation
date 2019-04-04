@@ -20,6 +20,12 @@ UServerTestGameInstance::UServerTestGameInstance(const FObjectInitializer &Objec
 	if (!ensure(MenuBPClass.Class != nullptr)) return;
 
 	MenuClass = MenuBPClass.Class;
+
+	ConstructorHelpers::FClassFinder<UUserWidget> InGameMenuBPClass(TEXT("/Game/MenuWidgets/WBP_InGameMenu"));
+	if (!ensure(InGameMenuBPClass.Class != nullptr)) return;
+
+	InGameMenuClass = InGameMenuBPClass.Class;
+
 	
 }
 
@@ -128,6 +134,19 @@ void UServerTestGameInstance::OnFindSessionComplete(bool Success)
 		}
 		
 	}
+}
+
+
+void UServerTestGameInstance::InGameLoadMenu()
+{
+	if (!ensure(InGameMenuClass != nullptr)) return;
+
+	UMainMenuWidget* Menu = CreateWidget<UMainMenuWidget>(this, InGameMenuClass);
+	if (!ensure(Menu != nullptr)) return;
+
+	Menu->Setup();
+
+	Menu->SetMenuInterface(this);
 }
 
 void UServerTestGameInstance::CreateSession()

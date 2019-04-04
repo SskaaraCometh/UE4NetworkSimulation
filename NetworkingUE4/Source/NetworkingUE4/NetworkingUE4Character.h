@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "ServerTestGameInstance.h"
 #include "NetworkingUE4Character.generated.h"
 
 UCLASS(config=Game)
@@ -32,6 +33,9 @@ public:
 protected:
 
 	/** Resets HMD orientation in VR. */
+	/** Call the InGameMenu. */
+	void InGameMenu();
+
 	void OnResetVR();
 
 	/** Called for forwards/backward input */

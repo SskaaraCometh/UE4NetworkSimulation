@@ -60,6 +60,9 @@ private:
 	UFUNCTION()
 	void OpenMainMenu();
 
+	UFUNCTION()
+	void InGameLoadMenu();
+
 	
 protected: 
 	virtual bool Initialize() override;

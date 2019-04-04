@@ -7,6 +7,7 @@
 #include "OnlineSubsystem.h"
 #include "MenuSystem/IMenuInterface.h"
 #include "MenuSystem/MainMenuWidget.h"
+#include "MenuSystem/InGameMenu.h"
 #include "ServerTestGameInstance.generated.h"
 
 /**
@@ -33,6 +34,9 @@ public:
 
 	TSharedPtr<class FOnlineSessionSearch> SessionSearch;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void InGameLoadMenu() override;
+
 private:
 	IOnlineSessionPtr SessionInterface;
 
@@ -43,9 +47,13 @@ private:
 	void OnDestroySession(FName SessionName, bool Success);
 
 	void OnFindSessionComplete(bool Success);
+
+	
 	
 	TSubclassOf<class UUserWidget> MenuClass;
 
 	UMainMenuWidget* Menu;
+
+	TSubclassOf<class UUserWidget> InGameMenuClass;
 
 };
