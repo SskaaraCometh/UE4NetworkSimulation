@@ -27,6 +27,9 @@ public:
 	class UButton* BackButton;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* JoinIPButton;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UWidgetSwitcher* MenuSwitcher;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
@@ -34,6 +37,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UWidget* MainMenu;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UEditableTextBox* IPTextBox;
 
 	void SetMenuInterface(IIMenuInterface* MenuInterface);
 

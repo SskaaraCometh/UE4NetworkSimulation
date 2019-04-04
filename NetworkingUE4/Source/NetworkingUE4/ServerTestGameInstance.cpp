@@ -56,7 +56,7 @@ void UServerTestGameInstance::Init()
 
 void UServerTestGameInstance::LoadMenu()
 {
-	UMainMenuWidget* Menu = CreateWidget<UMainMenuWidget>(this, MenuClass);
+	Menu = CreateWidget<UMainMenuWidget>(this, MenuClass);
 	if (!ensure(Menu != nullptr)) return;
 
 	Menu->Setup();
@@ -65,6 +65,7 @@ void UServerTestGameInstance::LoadMenu()
 
 void UServerTestGameInstance::Host()
 {
+
 	if (SessionInterface.IsValid())
 	{
 		
@@ -144,6 +145,11 @@ void UServerTestGameInstance::CreateSession()
 
 void UServerTestGameInstance::Join(const FString &Address)
 {
+	if (Menu != nullptr)
+	{
+		
+	}
+
 	UEngine* Engine = GetEngine();
 	if (!ensure(Engine != nullptr)) return;
 
