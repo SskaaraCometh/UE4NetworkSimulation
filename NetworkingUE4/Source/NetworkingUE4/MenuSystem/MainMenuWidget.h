@@ -17,6 +17,8 @@ class NETWORKINGUE4_API UMainMenuWidget : public UUserWidget
 	
 public:
 
+	UMainMenuWidget(const FObjectInitializer &ObjectInitialiser);
+
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UButton* JoinButton;
 
@@ -42,7 +44,7 @@ public:
 	class UWidget* MainMenu;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UEditableTextBox* IPTextBox;
+	class UPanelWidget* ServerList;
 
 	void SetMenuInterface(IIMenuInterface* MenuInterface);
 
@@ -73,5 +75,7 @@ protected:
 	virtual bool Initialize() override;
 
 	IIMenuInterface* MenuInterface = nullptr;
+
+	TSubclassOf<class UUserWidget> ServerRowClass;
 	
 };

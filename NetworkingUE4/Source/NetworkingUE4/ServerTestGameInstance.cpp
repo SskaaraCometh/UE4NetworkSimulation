@@ -26,7 +26,6 @@ UServerTestGameInstance::UServerTestGameInstance(const FObjectInitializer &Objec
 
 	InGameMenuClass = InGameMenuBPClass.Class;
 
-	
 }
 
 void UServerTestGameInstance::Init()
