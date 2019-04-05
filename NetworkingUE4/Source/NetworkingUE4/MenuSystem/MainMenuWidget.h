@@ -30,6 +30,9 @@ public:
 	class UButton* JoinIPButton;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* QuitButton;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UWidgetSwitcher* MenuSwitcher;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
@@ -63,6 +66,8 @@ private:
 	UFUNCTION()
 	void InGameLoadMenu();
 
+	UFUNCTION()
+	void QuitPressed();
 	
 protected: 
 	virtual bool Initialize() override;

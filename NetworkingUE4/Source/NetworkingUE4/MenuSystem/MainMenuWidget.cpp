@@ -23,6 +23,9 @@ bool UMainMenuWidget::Initialize()
 	if (!ensure(JoinIPButton != nullptr)) return false;
 	JoinIPButton->OnClicked.AddDynamic(this, &UMainMenuWidget::JoinServer);
 
+	if (!ensure(QuitButton != nullptr)) return false;
+	QuitButton->OnClicked.AddDynamic(this, &UMainMenuWidget::QuitPressed);
+
 	return true;
 }
 
@@ -100,4 +103,15 @@ void UMainMenuWidget::OpenMainMenu()
 void UMainMenuWidget::InGameLoadMenu()
 {
 	MenuInterface->InGameLoadMenu();
+}
+
+void UMainMenuWidget::QuitPressed()
+{
+	UWorld* World = GetWorld();
+	if (!ensure(World != nullptr)) return;
+
+	APlayerController* PlayerController = World->GetFirstPlayerController();
+	if (!ensure(PlayerController != nullptr)) return;
+
+	PlayerController->ConsoleCommand("Quit");
 }
