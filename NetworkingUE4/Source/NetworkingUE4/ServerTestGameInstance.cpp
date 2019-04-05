@@ -41,16 +41,7 @@ void UServerTestGameInstance::Init()
 			SessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UServerTestGameInstance::OnCreateSessionComplete);
 			SessionInterface->OnDestroySessionCompleteDelegates.AddUObject(this, &UServerTestGameInstance::OnDestroySession);
 			SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &UServerTestGameInstance::OnFindSessionComplete);
-
-			SessionSearch = MakeShareable(new FOnlineSessionSearch());
-			if (SessionSearch.IsValid())
-			{
-				SessionSearch->bIsLanQuery = true;
-				UE_LOG(LogTemp, Warning, TEXT("Starting find session"));
-				SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
-			}
-
-			
+		
 		}
 	}
 	else
@@ -124,14 +115,18 @@ void UServerTestGameInstance::OnDestroySession(FName SessionName, bool Success)
 
 void UServerTestGameInstance::OnFindSessionComplete(bool Success)
 {
-	if (Success && SessionSearch.IsValid())
+	if (Success && SessionSearch.IsValid() && Menu != nullptr)
 	{
+		TArray<FString> ServerNames;
+		
 		UE_LOG(LogTemp, Warning, TEXT("Finished finding session"));
 		for (const FOnlineSessionSearchResult& SearchResult : SessionSearch->SearchResults) //range based for loop
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Found Session names: %s"), *SearchResult.GetSessionIdStr());
+			ServerNames.Add(SearchResult.GetSessionIdStr());
 		}
 		
+		Menu->SetServerList(ServerNames);
 	}
 }
 
@@ -146,6 +141,17 @@ void UServerTestGameInstance::InGameLoadMenu()
 	Menu->Setup();
 
 	Menu->SetMenuInterface(this);
+}
+
+void UServerTestGameInstance::RefreshingServerList()
+{
+	SessionSearch = MakeShareable(new FOnlineSessionSearch());
+	if (SessionSearch.IsValid())
+	{
+		SessionSearch->bIsLanQuery = true;
+		UE_LOG(LogTemp, Warning, TEXT("Starting find session"));
+		SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
+	}
 }
 
 void UServerTestGameInstance::CreateSession()
@@ -165,21 +171,21 @@ void UServerTestGameInstance::Join(const FString &Address)
 {
 	if (Menu != nullptr)
 	{
-		
+		Menu->SetServerList({"Test1", "Test2"});
 	}
 
-	UEngine* Engine = GetEngine();
-	if (!ensure(Engine != nullptr)) return;
+	//UEngine* Engine = GetEngine();
+	//if (!ensure(Engine != nullptr)) return;
 
-	Engine->AddOnScreenDebugMessage(INDEX_NONE, 10.f, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
-	
-	UWorld* World = GetWorld();
-	if (!ensure(World != nullptr)) return;
+	//Engine->AddOnScreenDebugMessage(INDEX_NONE, 10.f, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
+	//
+	//UWorld* World = GetWorld();
+	//if (!ensure(World != nullptr)) return;
 
-	APlayerController* PlayerCont = GetFirstLocalPlayerController();
-	if (!ensure(PlayerCont != nullptr)) return;
+	//APlayerController* PlayerCont = GetFirstLocalPlayerController();
+	//if (!ensure(PlayerCont != nullptr)) return;
 
-	PlayerCont->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+	//PlayerCont->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 }
 
 

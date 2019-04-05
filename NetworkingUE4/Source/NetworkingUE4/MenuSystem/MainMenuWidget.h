@@ -19,6 +19,8 @@ public:
 
 	UMainMenuWidget(const FObjectInitializer &ObjectInitialiser);
 
+	void SetServerList(TArray<FString> ServerNames);
+
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UButton* JoinButton;
 

@@ -37,6 +37,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void InGameLoadMenu() override;
 
+	void RefreshingServerList() override;
+
 private:
 	IOnlineSessionPtr SessionInterface;
 
